@@ -1,32 +1,27 @@
+<mat-toolbar color="primary">
+	<div id="Menu">
+		<a routerLink="">
+			<button mat-button>Dashboard</button>
 
-  <nav>
-  <a RouterLink="/home">Home</a>
-  <a RouterLink="/Add">Add</a>
-  </nav>
-	<mat-toolbar color="primary">
-		<div id="Menu">
-			<a RouterLink="/">
-				<button mat-button>Dashboard</button>
-
-			</a>
-			<a RouterLink="/add">
-				<button mat-button color="basic"> Add </button>
-			</a>
-			<a RouterLink="/map">
-				<button mat-button color="basic"> Map </button>
-			</a>
-		</div>
-		<!--Search-->
-
-		<div id="Search">
-
-
-		</div>
-		<span class="example-spacer"></span>
-		<a mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
-			<mat-icon>favorite</mat-icon>
 		</a>
-		<button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+		<a routerLink="/add">
+			<button mat-button color="basic"> Add </button>
+		</a>
+		<a routerLink="/map">
+			<button mat-button color="basic"> Map </button>
+		</a>
+	</div>
+	<!--Search-->
+
+	<div id="Search">
+
+
+	</div>
+	<span class="example-spacer"></span>
+	<a mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+		<mat-icon>favorite</mat-icon>
+	</a>
+	<button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
       <mat-icon>share</mat-icon>
     </button>
-	</mat-toolbar>
+</mat-toolbar>
