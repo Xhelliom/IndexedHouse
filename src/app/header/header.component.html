@@ -1,17 +1,24 @@
-<p>
+
+  <nav>
+  <a RouterLink="/home">Home</a>
+  <a RouterLink="/Add">Add</a>
+  </nav>
 	<mat-toolbar color="primary">
 		<div id="Menu">
-			<a mat-icon-button RouterLink="/">
-				<mat-icon>home</mat-icon>
-        <span>Dashboard</span>
+			<a RouterLink="/">
+				<button mat-button>Dashboard</button>
+
 			</a>
-      <a mat-icon-button RourLink="/add">
-        <mat-icon> add </mat-icon>
-      </a>
-    </div>
-    <!--Search-->
-    
-    <div id="Search">
+			<a RouterLink="/add">
+				<button mat-button color="basic"> Add </button>
+			</a>
+			<a RouterLink="/map">
+				<button mat-button color="basic"> Map </button>
+			</a>
+		</div>
+		<!--Search-->
+
+		<div id="Search">
 
 
 		</div>
@@ -23,4 +30,3 @@
       <mat-icon>share</mat-icon>
     </button>
 	</mat-toolbar>
-</p>

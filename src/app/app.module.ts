@@ -4,15 +4,18 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatSliderModule } from "@angular/material/slider";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
+import {MatButtonModule} from '@angular/material/button';
+
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { HomeComponent } from "./home/home.component";
-import { HeaderComponent } from './header/header.component';
+import { HeaderComponent } from "./header/header.component";
+import { AddComponent } from './add/add.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, HeaderComponent],
+  declarations: [AppComponent, HomeComponent, HeaderComponent, AddComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -20,7 +23,8 @@ import { HeaderComponent } from './header/header.component';
     MatToolbarModule,
     MatSliderModule,
     MatIconModule,
-    MatMenuModule
+    MatMenuModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
