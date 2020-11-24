@@ -1,6 +1,23 @@
-<mat-form-field class="form-field">
-	<mat-label for="Titre">Titre</mat-label>
-	<input matInput type="text" id="Titre"/>
+<p>
+	Hi
+</p>
 
-	<mat-label for="category">Catégorie</mat-label>
-	<input type="text" id ="category"/> <br />
+
+<form class="add-form">
+	<mat-form-field appearance="standard" class="form-field">
+		<mat-label for="Titre">Titre</mat-label>
+		<input matInput type="text" id="Titre"/>
+  </mat-form-field>
+
+		<mat-form-field appearance="standard" class="form-field">
+			<mat-label for="category">Catégorie</mat-label>
+			<input matInput type="text" id ="category"/>
+   </mat-form-field>
+
+			<mat-form-field appearance="fill" class="form-field">
+				<mat-label>Select me</mat-label>
+				<mat-select>
+					<mat-option value="option">Option</mat-option>
+				</mat-select>
+			</mat-form-field>
+</form>
