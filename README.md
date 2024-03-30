@@ -1,3 +1,5 @@
+[![Build Status](https://drone.wetter.land/api/badges/Xhelliom/IndexedHouse/status.svg)](https://drone.wetter.land/Xhelliom/IndexedHouse)
+
 # IndexedHouse
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.2.
