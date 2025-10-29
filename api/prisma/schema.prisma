@@ -1,0 +1,106 @@
+// Schéma Prisma pour l'inventaire
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+
+  rooms        Room[]
+  containers   Container[]
+  items        Item[]
+  photos       Photo[]
+}
+
+model Room {
+  id        String    @id @default(cuid())
+  name      String
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  containers Container[]
+  items      Item[]
+}
+
+model Container {
+  id                 String      @id @default(cuid())
+  name               String
+  type               String
+  userId             String
+  user               User        @relation(fields: [userId], references: [id])
+  roomId             String?
+  room               Room?       @relation(fields: [roomId], references: [id])
+  parentContainerId  String?
+  parent             Container?  @relation("ContainerHierarchy", fields: [parentContainerId], references: [id])
+  children           Container[] @relation("ContainerHierarchy")
+  items              Item[]
+  photos             Photo[]
+}
+
+model Item {
+  id                  String         @id @default(cuid())
+  title               String
+  description         String?
+  quantity            Int            @default(1)
+  barcode             String?
+  createdAt           DateTime       @default(now())
+  userId              String
+  user                User           @relation(fields: [userId], references: [id])
+  primaryContainerId  String?
+  primaryContainer    Container?     @relation(fields: [primaryContainerId], references: [id])
+  roomId              String?
+  room                Room?          @relation(fields: [roomId], references: [id])
+  locationEvents      LocationEvent[]
+  photos              Photo[]
+  embedding           ItemEmbedding?
+}
+
+model LocationEvent {
+  id          String    @id @default(cuid())
+  notedAt     DateTime  @default(now())
+  itemId      String
+  item        Item      @relation(fields: [itemId], references: [id])
+  containerId String?
+  container   Container? @relation(fields: [containerId], references: [id])
+  roomId      String?
+  room        Room?     @relation(fields: [roomId], references: [id])
+  photoId     String?
+  photo       Photo?    @relation(fields: [photoId], references: [id])
+}
+
+model Photo {
+  id           String    @id @default(cuid())
+  s3Key        String
+  thumbnailKey String?
+  width        Int?
+  height       Int?
+  takenAt      DateTime? @default(now())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id])
+  subjectType  String?
+  subjectId    String?
+  container    Container[]
+  item         Item[]
+}
+
+model ItemEmbedding {
+  id       String  @id @default(cuid())
+  itemId   String  @unique
+  item     Item    @relation(fields: [itemId], references: [id])
+  provider String
+  model    String
+  // Stockage de vecteur sous forme de bytea/text pour commencer; migration vers pgvector plus tard
+  vector   Bytes
+}
+
+// Index
+@@index([userId])
+
+
