@@ -11,7 +11,7 @@ import { registerUploadRoutes } from './routes/upload.js';
 import { registerAiRoutes } from './routes/ai.js';
 import { registerSearchRoutes } from './routes/search.js';
 
-export function createServer() {
+export async function createServer() {
   // Logger JSON lisible par pino-pretty en dev
   const app = Fastify({ logger: true });
 

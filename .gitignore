@@ -2,21 +2,32 @@
 .env
 .env.local
 .env.*.local
+**/.env
+**/.env.local
+**/.env.*.local
 
 # Dépendances
-/node_modules
+node_modules
+**/node_modules
 /.pnp
 .pnp.js
+**/.pnp
+**/.pnp.js
 
 # Production
 /build
 /dist
 .out
+**/build
+**/dist
+**/.out
 
 # Dossiers Next.js
 .next
 .next/
+**/.next
 /out
+**/out
 
 # Logs
 npm-debug.log*
@@ -24,32 +35,47 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/pnpm-debug.log*
+**/lerna-debug.log*
 
 # Test coverage
 coverage
+**/coverage
 
 # fichiers système
 .DS_Store
 Thumbs.db
+**/.DS_Store
+**/Thumbs.db
 
 # cache
 .cache
 .nyc_output
+**/.cache
+**/.nyc_output
 
 # fichiers propres à VSCode
 .vscode
+**/.vscode
 
 # fichiers .eslintcache
 .eslintcache
+**/.eslintcache
 
 # fichiers .turbo
 .turbo
+**/.turbo
 
 # fichiers de sortie de bun
 .bun
+**/.bun
 
 # fichiers de sortie de vercel
 .vercel
+**/.vercel
 
 # Fichiers de démonstration Next.js
 /examples/**/node_modules
@@ -58,6 +84,6 @@ Thumbs.db
 
 # autres
 *.log
+**/*.log
 npm-debug.log*
-# End of Selection
-```
+**/npm-debug.log*

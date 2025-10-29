@@ -4,7 +4,7 @@ import { createServer } from './server.js';
 const start = async () => {
   const port = Number(process.env.PORT || 4000);
   const host = '0.0.0.0';
-  const app = createServer();
+  const app = await createServer();
   try {
     await app.listen({ port, host });
     app.log.info({ port }, 'API démarrée');
