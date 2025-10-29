@@ -27,6 +27,8 @@ model Room {
   user      User      @relation(fields: [userId], references: [id])
   containers Container[]
   items      Item[]
+  locationEvents LocationEvent[]
+  @@index([userId])
 }
 
 model Container {
@@ -42,6 +44,8 @@ model Container {
   children           Container[] @relation("ContainerHierarchy")
   items              Item[]
   photos             Photo[]
+  locationEvents     LocationEvent[]
+  @@index([userId])
 }
 
 model Item {
@@ -60,6 +64,7 @@ model Item {
   locationEvents      LocationEvent[]
   photos              Photo[]
   embedding           ItemEmbedding?
+  @@index([userId])
 }
 
 model LocationEvent {
@@ -88,6 +93,8 @@ model Photo {
   subjectId    String?
   container    Container[]
   item         Item[]
+  locationEvents LocationEvent[]
+  @@index([userId])
 }
 
 model ItemEmbedding {
@@ -100,7 +107,6 @@ model ItemEmbedding {
   vector   Bytes
 }
 
-// Index
-@@index([userId])
+// Index global supprimé (doit être défini au niveau des modèles)
 
 

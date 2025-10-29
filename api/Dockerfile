@@ -10,14 +10,15 @@ RUN if [ -f package-lock.json ]; then npm ci; \
     else npm install; fi
 
 # Copie du code et build
+COPY prisma ./prisma
 COPY tsconfig.json ./
 COPY src ./src
-RUN npm run build || true
+RUN npx prisma generate && npm run build
 
 # Port API
 EXPOSE 4000
 
-# Démarrage
-CMD ["sh", "-c", "node dist/index.js || (echo 'API non encore construite, lancement en veille...' && tail -f /dev/null)"]
+# Démarrage (applique les migrations avant de lancer l'API)
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/index.js"]
 
 

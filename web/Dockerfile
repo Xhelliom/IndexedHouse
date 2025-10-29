@@ -2,17 +2,23 @@
 FROM node:20-alpine AS base
 WORKDIR /app
 
-# Dépendances (placeholder: à compléter lors du scaffold frontend)
+# Dépendances
 COPY package.json package-lock.json* pnpm-lock.yaml* yarn.lock* ./
-RUN npm -v >/dev/null 2>&1 || true
+RUN if [ -f package-lock.json ]; then npm ci; \
+    elif [ -f yarn.lock ]; then corepack enable && yarn install --frozen-lockfile; \
+    elif [ -f pnpm-lock.yaml ]; then corepack enable && pnpm install --frozen-lockfile; \
+    else npm install; fi
 
-# Copie du code (sera remplacé lors de l'implémentation)
+# Copie du code
 COPY . .
+
+# Build de l'app Next pour le démarrage en prod
+RUN npm run build
 
 # Port Web
 EXPOSE 3000
 
-# Commande par défaut (garde le conteneur vivant tant que le web n'est pas prêt)
-CMD ["sh", "-c", "npm run start || (echo 'Web non encore construit, en attente...' && tail -f /dev/null)"]
+# Commande par défaut
+CMD ["npm", "run", "start"]
 
 
