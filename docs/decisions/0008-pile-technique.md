@@ -1,7 +1,10 @@
 # ADR 0008 — Arrêter la pile technique
 
-- Statut : accepté
+- Statut : accepté, partiellement révisé
 - Date : 2026-09-12
+- Révisions : empaquetage et déploiement par ADR 0012, interface par ADR 0013,
+  accès externe par ADR 0015, recherche vectorielle par ADR 0017. Les autres
+  lignes du tableau restent en vigueur.
 
 ## Contexte
 

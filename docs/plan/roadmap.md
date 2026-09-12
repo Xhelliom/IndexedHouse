@@ -5,7 +5,7 @@ Au delà, rien n'est planifié.
 
 | Lot | Contenu | Livrable seul | État |
 |---|---|---|---|
-| 0 | Socle : dépôt propre, compose, migrations, comptes, maisons, membres, jeu de données de test | non | à faire |
+| 0 | Socle : voir le détail ci-dessous | non | à faire |
 | 1 | Étiquettes QR, arbre, scan vers fiche contenant, saisie manuelle | **oui** | à faire |
 | 2 | Capture hors-ligne, synchronisation, pipeline vision, boîte de réception | oui | à faire |
 | 3 | Recherche en langage naturel avec preuve photo | oui | à faire |
@@ -53,12 +53,41 @@ appelant, et non un chantier séparé.
 donc il rend la recherche utile plus vite. L'ordre actuel donne la priorité à la
 recherche parce qu'elle est la promesse d'origine du projet.
 
-## Prochaine étape
+## Détail du lot 0
 
-Lot 0. Il inclut la suppression de la tentative antérieure présente dans le
-dépôt (`api/`, `web/`, `indexed-house/`), dans le même commit que la mise en
-place du nouveau socle, pour garder un historique lisible.
+Contenu, revu après les décisions d'infrastructure :
 
-À ne pas oublier au lot 1, du fait de l'ADR 0010 : encourager des noms de
-contenants signifiants au moment de l'étiquetage. « Bac 1, Bac 2, Bac 3 » rendrait
-le lot 4 inopérant.
+- Suppression de la tentative antérieure (`api/`, `web/`, `indexed-house/`), dans
+  le même commit que la mise en place du socle, pour garder un historique
+  lisible.
+- Dépôt unique en espaces de travail : interface, serveur, paquet partagé
+  (ADR 0012).
+- Une seule image, deux commandes de démarrage. Manifestes Kubernetes : deux
+  déploiements, un service, une entrée (ADR 0012).
+- Postgres par l'opérateur CloudNativePG, avec sa sauvegarde (ADR 0012, 0020).
+- Migrations Drizzle en SQL, exécutées par un travail éphémère avant le
+  démarrage, en avant seulement (ADR 0014).
+- Nom de domaine, entrée et certificat par défi DNS. **C'est un prérequis du lot
+  0, pas une finition** : sans contexte sécurisé, ni la caméra ni le hors-ligne
+  ne fonctionnent (ADR 0015).
+- Comptes, maisons, adhésions avec portée et validité (ADR 0006).
+- Le chemin d'accès unique à la base, et le test qui échoue si on le contourne
+  (ADR 0018).
+- Row Level Security posé dès la première migration, pas ajouté après.
+- Jeu de données semé, type de compte, fournisseur de vision factice (ADR 0009).
+
+Explicitement **hors** du lot 0 : pgvector (ADR 0017), toute brique de
+synchronisation (ADR 0016), MinIO peut attendre le lot 2 puisque rien ne produit
+encore de photo.
+
+## À ne pas oublier plus loin
+
+- **Lot 1** : encourager des noms de contenants signifiants au moment de
+  l'étiquetage. « Bac 1, Bac 2, Bac 3 » rendrait le lot 4 inopérant (ADR 0010).
+- **Avant le lot 2** : évaluer ElectricSQL et PowerSync sur le schéma réel. Tâche
+  explicite, à ne pas escamoter sous la pression de coder (ADR 0016).
+- **Lot 2** : plafond mensuel de dépense de vision par compte, dès que le
+  pipeline existe (ADR 0020). Et vérifier l'orientation EXIF sur des fichiers
+  réels de plusieurs téléphones (ADR 0019).
+- **Lot 3** : trancher l'ordre avec le lot 4, et réexaminer pgvector sur des
+  mesures de qualité de recherche (ADR 0017).

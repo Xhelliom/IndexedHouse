@@ -48,3 +48,12 @@ Ce que cela impose ensuite, y compris ce que cela rend plus difficile.
 | 0009 | Tout cascade depuis le compte | accepté |
 | 0010 | La suggestion de rangement s'appuie d'abord sur un a priori sémantique | accepté |
 | 0011 | Un seul moteur de score, pour ranger et pour retrouver | accepté |
+| 0012 | Une image, deux déploiements, sur le cluster existant | accepté |
+| 0013 | Vite plutôt que Next.js | accepté |
+| 0014 | Drizzle plutôt que Prisma | accepté |
+| 0015 | HTTPS partout, y compris sur le réseau local | accepté |
+| 0016 | Ne pas écrire de moteur de synchronisation sans avoir évalué l'existant | accepté |
+| 0017 | Reporter la recherche vectorielle | accepté |
+| 0018 | Un seul chemin d'accès à la base, vérifié par un test | accepté |
+| 0019 | Réduction cliente, normalisation serveur, pas d'original conservé | accepté |
+| 0020 | Sauvegardes par nature de données, restauration vérifiée | accepté |

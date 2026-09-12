@@ -283,15 +283,21 @@ lots, jamais bloquante.
 
 ## 5. Choix techniques
 
-| Élément | Choix | Raison |
+| Élément | Choix | Décision |
 |---|---|---|
-| Front | PWA React + Vite, Workbox, Dexie | hors-ligne et appareil photo sans passer par les stores |
-| API | Node + Fastify | séparée du front, consommée aussi par la PWA hors-ligne |
-| Base | PostgreSQL + pgvector + RLS | une seule dépendance pour données, vecteurs et isolation |
-| File d'attente | pg-boss | évite d'ajouter Redis pour une charge domestique |
-| Stockage photo | MinIO, API compatible S3 | auto-hébergé, migrable vers S3 sans changer le code |
-| Vision | API Claude derrière une interface | remplaçable par un modèle local plus tard |
-| Accès externe | tunnel Cloudflare | aucun port ouvert, marche depuis tout navigateur |
+| Interface | application web installable, React et Vite, Workbox, Dexie | ADR 0013 |
+| Serveur | Node et Fastify, sert aussi les fichiers statiques | ADR 0012 |
+| Accès base | Drizzle, migrations en SQL | ADR 0014 |
+| Base | PostgreSQL, Row Level Security, opérateur CloudNativePG | ADR 0006, 0012 |
+| Recherche | plein texte français et trigrammes, pas de vecteurs en V1 | ADR 0017 |
+| File d'attente | pg-boss, adossé à la même base | ADR 0008 |
+| Stockage photo | MinIO, API compatible S3 | ADR 0008 |
+| Vision | API Claude derrière une interface remplaçable | ADR 0008 |
+| Déploiement | une image, deux déploiements sur le cluster existant | ADR 0012 |
+| Accès | nom de domaine et certificat valide, y compris en local | ADR 0015 |
+| Hors-ligne | moteur de synchronisation à évaluer avant le lot 2 | ADR 0016 |
+| Images | réduction cliente, normalisation serveur, pas d'original | ADR 0019 |
+| Sauvegardes | par nature de données, restauration vérifiée chaque mois | ADR 0020 |
 
 Coût de la vision, pour environ 2000 tokens d'entrée et 300 de sortie par photo :
 
