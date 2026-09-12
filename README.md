@@ -1,80 +1,28 @@
-IndexedHouse — Documentation du Projet
+# IndexedHouse
 
----
+Indexer sans friction le contenu physique d'une maison, puis le retrouver.
 
-Sommaire
+Usage principal : personnel et familial, en auto-hébergement, sur deux maisons.
+Deux domaines : le rangement (qu'est-ce qui est où) et la documentation technique
+de la maison (tableau électrique, équipements, entretien).
 
-- [Aperçu](#aperçu)
-- [Guides](#guides)
-  - [Guide d’utilisation](docs/guide-utilisation.md)
-  - [Guide de développement](docs/guide-developpement.md)
-- [Architecture rapide](#architecture-rapide)
-- [Prérequis](#prérequis)
-- [Installation](#installation)
-- [Démarrage rapide](#démarrage-rapide)
-- [Scripts utiles](#scripts-utiles)
-- [Qualité et CI](#qualité-et-ci)
-- [Support](#support)
+**Le projet est en conception. Aucun code de la nouvelle version n'est écrit.**
+Les répertoires `api/`, `web/` et `indexed-house/` sont les restes d'une
+tentative antérieure abandonnée ; ils seront supprimés au démarrage du lot 0.
 
----
+## Documentation
 
-## Aperçu
+| Chemin | Contenu |
+|---|---|
+| [`docs/README.md`](docs/README.md) | Comment le dossier est organisé et comment on travaille |
+| [`docs/architecture.md`](docs/architecture.md) | La vue d'ensemble du système |
+| [`docs/plan/roadmap.md`](docs/plan/roadmap.md) | Les lots et l'avancement |
+| [`docs/decisions/`](docs/decisions/) | Les décisions structurantes, datées et immuables |
+| [`docs/specs/`](docs/specs/) | Une spécification par lot, écrite avant le code |
+| [`docs/futur/`](docs/futur/) | Idées mûries, non engagées |
 
-IndexedHouse est une application web. Ce dépôt contient notamment le dossier `web/` (application, configuration TypeScript, Tailwind, etc.).
+## Le principe à retenir
 
-## Guides
-
-- Guide d’utilisation: voir `docs/guide-utilisation.md`.
-- Guide de développement: voir `docs/guide-developpement.md`.
-
-## Architecture rapide
-
-- `web/`: application front (Next.js/React) et configuration associée.
-- `web/app/`: pages et mises en page.
-- `web/lib/`: utilitaires partagés.
-- `web/tailwind.config.ts`: configuration Tailwind.
-- `web/tsconfig.json`: configuration TypeScript.
-
-## Prérequis
-
-- Node.js LTS (recommandé) et npm ou pnpm.
-- Accès aux variables d’environnement si nécessaire (fichier `.env.local`).
-
-## Installation
-
-1. Cloner le dépôt
-2. Installer les dépendances dans `web/`
-
-```bash
-cd web
-npm install
-```
-
-## Démarrage rapide
-
-```bash
-cd web
-npm run dev
-```
-
-L’application est alors accessible en local (par défaut sur `http://localhost:3000`).
-
-## Scripts utiles
-
-```bash
-npm run dev      # démarrage en mode développement
-npm run build    # build de production
-npm run start    # démarrage en mode production (après build)
-npm run lint     # analyse lint
-```
-
-## Qualité et CI
-
-- Linting TypeScript et style via ESLint/Tailwind (voir `web/tailwind.config.ts`).
-- Tests: à compléter selon le stack de test retenu.
-
-## Support
-
-En cas de question, ouvrez une issue ou contactez les mainteneurs du dépôt.
-
-
+Ranger un objet ne doit jamais coûter plus d'un geste et d'une photo. Toute
+fonctionnalité qui ajoute une étape au moment du rangement est reportée ou
+supprimée.

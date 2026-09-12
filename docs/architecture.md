@@ -1,7 +1,9 @@
 # IndexedHouse — Document d'architecture
 
-> Statut: décisions de conception arrêtées, avant écriture du code.
-> Ce document fait autorité sur le découpage et le modèle de données.
+> Statut : décisions de conception arrêtées, avant écriture du code.
+> Ce document décrit **ce qu'est** le système. Le **pourquoi** de chaque choix,
+> avec les alternatives écartées, est dans `decisions/`. Le plan de travail est
+> dans `plan/roadmap.md`. Voir `README.md` pour la méthode.
 
 ---
 
@@ -55,6 +57,8 @@ une étape au moment du rangement est reportée ou supprimée.
 
 ### 2.1 L'identité vient du QR, le contenu vient de la vision
 
+> ADR 0001
+
 La reconnaissance visuelle d'un *contenant* est peu fiable : deux tiroirs blancs
 identiques dans la même pièce sont indistinguables pour un modèle de vision, et
 c'est le cas le plus fréquent dans une maison.
@@ -69,6 +73,8 @@ distinctifs, mais ce n'est pas le chemin nominal.
 
 ### 2.2 Un seul arbre de contenance
 
+> ADR 0002
+
 Maison, zone, pièce, meuble, tiroir, boîte, objet : un seul type de nœud, avec un
 parent. Une caisse à outils est un objet *et* un contenant. « Où est X » est la
 même requête à tous les niveaux.
@@ -77,6 +83,8 @@ C'est une simplification majeure par rapport à trois tables séparées
 pièce / contenant / objet, qui obligent à dupliquer la logique de hiérarchie.
 
 ### 2.3 La base stocke des observations, pas un état
+
+> ADR 0003
 
 Chaque photo est un événement : « à cette date, ces objets étaient dans ce
 contenant ». L'emplacement courant d'un objet est une **valeur dérivée**, pas une
@@ -97,6 +105,8 @@ en temps, et l'index se corrige seul.
 
 ### 2.4 La vision ne bloque jamais
 
+> ADR 0004
+
 La photo part en file d'attente. Les objets sont créés en brouillon avec la
 proposition du modèle. Une boîte de réception permet de corriger plus tard en un
 geste. La recherche fonctionne sur les brouillons, simplement marqués comme non
@@ -106,6 +116,8 @@ Si l'utilisateur doit valider sur le moment, la friction revient et l'applicatio
 est abandonnée en trois semaines.
 
 ### 2.5 Hors-ligne d'abord
+
+> ADR 0005
 
 Cave, garage, murs épais : c'est précisément là que l'on range. Le téléphone
 écrit localement (photo, code QR, horodatage, identifiant généré côté client),
@@ -119,6 +131,8 @@ Limite connue : la synchronisation en arrière-plan n'existe pas pour une PWA su
 iOS. Elle se déclenchera à l'ouverture de l'application. C'est acceptable.
 
 ### 2.6 Multi-tenant dès le départ, SaaS plus tard
+
+> ADR 0006
 
 Le tenant est le **compte**, pas la maison : un même foyer possède souvent
 plusieurs lieux (résidence principale, maison secondaire, cave louée) avec les
@@ -292,23 +306,10 @@ sans GPU dédié.
 
 ## 6. Découpage
 
-Les lots 0 à 5 constituent la V1, celle qui sert l'usage familial. Les suivants
-ne sont pas planifiés.
-
-| Lot | Contenu | Utilisable ? |
-|---|---|---|
-| 0 | Socle : dépôt propre, compose, migrations, comptes, maisons, membres, jeu de données de test | non |
-| 1 | Étiquettes, arbre, scan vers fiche contenant, saisie manuelle | **oui**, déjà |
-| 2 | Capture hors-ligne, synchronisation, pipeline vision, boîte de réception | oui |
-| 3 | Recherche en langage naturel avec preuve photo | oui |
-| 4 | Re-calibrage et « plus vu depuis » | oui |
-| 5 | Volet technique : tableau électrique, équipements, entretien | oui |
-| 6 | V2 — Accès invité : liens temporaires, visibilité par sous-arbre, vue guide | oui |
-| 7 | Hypothèse — SaaS : inscription publique, facturation | non planifié |
-
-Le lot 1 est volontairement livrable seul, sans aucune vision : un inventaire
-manuel avec QR est déjà utile, et il valide le modèle de données avant d'investir
-dans le pipeline d'images.
+Le plan de travail détaillé vit dans `plan/roadmap.md`, qui fait foi et suit
+l'avancement. En résumé : les lots 0 à 5 constituent la V1, le lot 1 est
+délibérément livrable sans aucune reconnaissance d'image, et rien au delà du lot
+5 n'est planifié.
 
 ---
 
