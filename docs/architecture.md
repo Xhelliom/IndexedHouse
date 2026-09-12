@@ -9,6 +9,30 @@
 
 Indexer sans friction le contenu physique d'une maison, puis le retrouver.
 
+### 1.1 Pour qui, et dans quel ordre
+
+L'usage principal est **personnel et familial** : le propriétaire et les siens,
+sur deux maisons, en auto-hébergement. C'est cet usage qui décide de tout.
+
+| Priorité | Besoin | Horizon |
+|---|---|---|
+| 1 | Rangement : qu'est-ce qui est où | V1 |
+| 2 | Documentation technique : tableau électrique, équipements, entretien | V1 |
+| 3 | Partage temporaire avec un occupant, locataire ou invité | V2 |
+| 4 | Mise à disposition en SaaS | hypothèse |
+
+Les niveaux 3 et 4 sont des extensions crédibles, pas des objectifs. Ils
+n'existent dans ce document que sous la forme des quelques choix de schéma qui
+seraient coûteux à rattraper après coup.
+
+**Règle d'arbitrage.** Quand un besoin de V2 entre en conflit avec la simplicité
+de la V1, la V1 gagne, sans discussion. On ne retient par anticipation que ce qui
+relève de la forme des données : une colonne, une portée, une clé étrangère. Ni
+écran, ni parcours, ni abstraction supplémentaire ne sont construits pour un
+usage que personne n'a encore.
+
+### 1.2 Deux domaines
+
 Deux domaines cohabitent, avec des usages très différents :
 
 | Domaine | Volume | Fréquence | Interface |
@@ -17,7 +41,9 @@ Deux domaines cohabitent, avec des usages très différents :
 | Documentation technique (tableau électrique, équipements, entretien) | faible | rare | formulaires et fiches |
 
 Le rangement porte toute la difficulté et toute la valeur. Il constitue le MVP.
-La documentation technique réutilisera le même arbre et vient ensuite.
+La documentation technique réutilisera le même arbre et vient juste après : elle
+fait pleinement partie de la V1, c'est elle qui répond aux questions que l'on se
+pose une fois par an et au pire moment, du genre où couper l'eau.
 
 Critère d'acceptation qui prime sur tous les autres : **ranger un objet ne doit
 jamais coûter plus d'un geste et d'une photo.** Toute fonctionnalité qui ajoute
@@ -266,6 +292,9 @@ sans GPU dédié.
 
 ## 6. Découpage
 
+Les lots 0 à 5 constituent la V1, celle qui sert l'usage familial. Les suivants
+ne sont pas planifiés.
+
 | Lot | Contenu | Utilisable ? |
 |---|---|---|
 | 0 | Socle : dépôt propre, compose, migrations, comptes, maisons, membres, jeu de données de test | non |
@@ -274,8 +303,8 @@ sans GPU dédié.
 | 3 | Recherche en langage naturel avec preuve photo | oui |
 | 4 | Re-calibrage et « plus vu depuis » | oui |
 | 5 | Volet technique : tableau électrique, équipements, entretien | oui |
-| 6 | Accès invité : liens temporaires, visibilité par sous-arbre, vue guide | oui |
-| 7 | SaaS : inscription publique, facturation | différé |
+| 6 | V2 — Accès invité : liens temporaires, visibilité par sous-arbre, vue guide | oui |
+| 7 | Hypothèse — SaaS : inscription publique, facturation | non planifié |
 
 Le lot 1 est volontairement livrable seul, sans aucune vision : un inventaire
 manuel avec QR est déjà utile, et il valide le modèle de données avant d'investir
@@ -322,11 +351,16 @@ présentation publique tombe du même mécanisme, sans travail supplémentaire.
 
 ---
 
-## 8. Accès invité temporaire
+## 8. Accès invité temporaire (V2)
+
+Extension envisagée, hors périmètre V1. Cette section ne décrit rien à
+construire : elle justifie trois colonnes posées dès maintenant, et sert de
+garde-fou pour ne pas fermer la porte par inadvertance.
 
 Cas d'usage : une maison louée, en courte durée ou non. Le propriétaire veut que
 l'occupant sache comment la maison fonctionne et où les choses sont rangées,
-pendant son séjour et pas au delà.
+pendant son séjour et pas au delà. Un usage familial ponctuel en découle aussi,
+par exemple les amis qui gardent la maison pendant les vacances.
 
 Trois propriétés le définissent.
 
@@ -363,15 +397,17 @@ propriétaire, pointant vers des nœuds ou du texte libre, sert mieux que la
 recherche. C'est le point où le volet documentation technique et le volet
 rangement se rejoignent.
 
-Cette piste est aussi la plus solide commercialement. Un inventaire familial se
-vend mal, chacun pensant pouvoir s'en passer. Un outil qui produit le guide d'une
-maison en location, avec accès invité expirant et recherche d'objets filtrée,
-s'adresse à quelqu'un dont c'est le métier.
+Remarque, sans que cela pèse sur les priorités : si l'outil devait un jour
+s'ouvrir à d'autres, c'est par là qu'il aurait le plus de chances. Un inventaire
+familial se vend mal, chacun pensant pouvoir s'en passer, alors qu'un guide de
+maison en location s'adresse à quelqu'un dont c'est le métier. Cela ne change
+rien à la V1 et ne doit rien y changer.
 
-Rien de tout cela n'est construit dans le MVP. Seules trois décisions sont prises
-maintenant, parce qu'elles coûtent une colonne chacune aujourd'hui et une
-migration douloureuse plus tard : la portée de l'adhésion, sa fenêtre de
-validité, et le drapeau de visibilité invité sur les nœuds.
+Rien de tout cela n'est construit. Seules trois décisions sont prises maintenant,
+parce qu'elles coûtent une colonne chacune aujourd'hui et une migration
+douloureuse plus tard : la portée de l'adhésion, sa fenêtre de validité, et le
+drapeau de visibilité invité sur les nœuds. Tout le reste, liens d'invitation,
+vue guide, prévisualisation, attend d'être réellement nécessaire.
 
 ---
 
