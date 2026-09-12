@@ -36,4 +36,6 @@ Ce que l'on sait ne pas traiter, et pourquoi c'est acceptable maintenant.
 
 ## État
 
-Aucune spécification écrite. La première sera celle du lot 0.
+| Lot | Spécification | Statut |
+|---|---|---|
+| 0 | `lot-0-socle.md` | écrite, à faire |
