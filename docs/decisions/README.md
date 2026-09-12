@@ -46,3 +46,4 @@ Ce que cela impose ensuite, y compris ce que cela rend plus difficile.
 | 0007 | Un invité ne voit rien par défaut | accepté |
 | 0008 | Pile technique | accepté |
 | 0009 | Tout cascade depuis le compte | accepté |
+| 0010 | La suggestion de rangement s'appuie d'abord sur un a priori sémantique | accepté |

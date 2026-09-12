@@ -270,6 +270,12 @@ chemin complet (Garage > Étagère métal > Bac bleu 3), la date de dernière
 observation, et **la photo où l'objet a été vu**, objet encadré. La photo est ce
 qui crée la confiance : elle prouve la réponse au lieu de l'affirmer.
 
+**Ranger sans savoir où.** Photographier l'objet seul, sans étiquette dans le
+cadre. Le système propose trois emplacements avec leur justification, on va y
+poser l'objet et on scanne l'étiquette, ce qui vaut confirmation. C'est le
+parcours qui rend l'application utile aux membres de la famille qui ne tiennent
+pas l'inventaire. Voir ADR 0010.
+
 **Corriger.** Une boîte de réception des détections non confirmées, traitable par
 lots, jamais bloquante.
 

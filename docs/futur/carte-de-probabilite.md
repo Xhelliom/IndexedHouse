@@ -46,9 +46,12 @@ souvent la vraie réponse à « où est passé le… ».
 
 1. **Classer les réponses de recherche.** Une liste d'emplacements probables au
    lieu d'une réponse unique potentiellement périmée.
-2. **Suggérer où ranger.** Au moment de photographier un objet sans avoir scanné
-   de contenant, proposer sa place habituelle. C'est un gain de friction, donc
-   c'est aligné avec le critère principal du projet.
+2. **Suggérer où ranger.** ~~Idée à mûrir.~~ **Promu au lot 4** du plan : c'est
+   la fonctionnalité qui fait passer l'application d'un outil qui enregistre à un
+   outil qui aide, et l'a priori sémantique (ADR 0010) lui permet de fonctionner
+   sans historique. Voir `plan/roadmap.md`. Ce qui reste dans la présente note
+   est la part qui a besoin d'historique : le raffinement progressif de la
+   suggestion par les habitudes réelles.
 3. **Guider la fouille.** « Commence par ici, puis là. » C'est la formulation
    d'origine de l'idée, et la plus directement utile.
 

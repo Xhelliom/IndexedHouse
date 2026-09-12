@@ -14,3 +14,6 @@ décisions du moment.
 | Note | Résumé | Prérequis déjà acquis ? |
 |---|---|---|
 | `carte-de-probabilite.md` | Classer les emplacements probables d'un objet à partir de son historique | oui, via ADR 0003 |
+
+Note : l'un des usages décrits dans cette note, la suggestion de rangement, en
+est sorti pour devenir le lot 4 du plan.
