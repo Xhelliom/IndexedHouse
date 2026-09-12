@@ -35,5 +35,5 @@ baisse, et au delà d'un seuil ils sont présentés comme « plus vu ici depuis 
 - L'historique est acquis sans effort : « où était-ce avant », « qui l'a rangé ».
 - La confiance décroît avec le temps, ce qui est une information utile en soi.
 - C'est **la** condition qui rend possible toute inférence probabiliste
-  ultérieure. Voir `futur/carte-de-probabilite.md`.
+  ultérieure. Voir `futur/emplacements-probables.md`.
 - Coût : un volume de lignes plus élevé, et un pipeline de dérivation à écrire.

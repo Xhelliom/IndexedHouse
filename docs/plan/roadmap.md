@@ -44,6 +44,11 @@ moitié manquante de la capture plutôt qu'un ajout.
 Enfin, grâce à l'a priori sémantique (ADR 0010), il fonctionne dès le premier
 jour, sans historique. C'est la seule fonctionnalité d'inférence dans ce cas.
 
+Son moteur de score sert aussi la recherche, en retournant la même question
+(ADR 0011) : « range-le plutôt ici » et « cherche ici en premier » sont le même
+calcul. Le classement probabiliste des emplacements en devient un simple
+appelant, et non un chantier séparé.
+
 **Ordre à trancher.** Il pourrait passer avant le lot 3 : il alimente le corpus,
 donc il rend la recherche utile plus vite. L'ordre actuel donne la priorité à la
 recherche parce qu'elle est la promesse d'origine du projet.

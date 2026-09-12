@@ -13,7 +13,8 @@ décisions du moment.
 
 | Note | Résumé | Prérequis déjà acquis ? |
 |---|---|---|
-| `carte-de-probabilite.md` | Classer les emplacements probables d'un objet à partir de son historique | oui, via ADR 0003 |
+| `emplacements-probables.md` | Proposer où chercher un objet à partir de son historique | oui, via ADR 0003 et le lot 4 |
 
 Note : l'un des usages décrits dans cette note, la suggestion de rangement, en
-est sorti pour devenir le lot 4 du plan.
+est sorti pour devenir le lot 4 du plan. Ce qui reste s'appuiera sur le moteur de
+score qu'il construit (ADR 0011), et n'est donc plus qu'un appelant de plus.
