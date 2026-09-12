@@ -105,8 +105,10 @@ ensuite. En revanche **construire** un SaaS (inscription publique, facturation,
 emails transactionnels, support) est un projet distinct qui n'est pas engagé ici.
 La porte reste ouverte, on ne la franchit pas.
 
-Différé assumé : la restriction d'un membre à une seule maison du compte. On
-l'ajoutera si le besoin se présente.
+Corollaire : une adhésion porte une **portée** (le compte entier, ou une seule
+maison) et une **fenêtre de validité**. La famille est membre du compte sans date
+de fin ; un invité temporaire est rattaché à une maison et expire tout seul.
+Voir § 8.
 
 ---
 
@@ -115,15 +117,20 @@ l'ajoutera si le besoin se présente.
 Toutes les tables portent `account_id`. L'isolation est doublée par du
 Row Level Security PostgreSQL adossé à une variable de session : pour un
 développeur seul, un filtre oublié dans une requête suffirait à exposer la
-maison d'un autre foyer.
+maison d'un autre foyer. Toutes les clés étrangères cascadent jusqu'au compte,
+de sorte qu'un compte se supprime ou se réinitialise intégralement (voir § 7).
 
 ### 3.1 Comptes et accès
 
 ```
-user            id, email, password_hash, display_name
-account         id, name, created_at, plan
-account_member  account_id, user_id, role (owner | admin | member), joined_at
-place           id, account_id, name, address, timezone      -- une maison
+user        id, email, password_hash, display_name
+account     id, name, kind (real | sandbox), created_at, plan
+place       id, account_id, name, address, timezone          -- une maison
+
+membership  id, account_id, user_id,
+            scope (account | place), place_id,
+            role (owner | admin | member | guest),
+            valid_from, valid_until, created_by
 ```
 
 Session longue durée sur le téléphone : aucun membre de la famille n'acceptera
@@ -137,6 +144,7 @@ node  id, account_id, place_id, parent_id, path,
       name, canonical_name, aliases[],
       quantity, notes, attrs (jsonb), cover_photo_id,
       status (active | archived),
+      guest_visible (défaut faux, hérité par le sous-arbre),
       last_seen_at, location_confidence,
       created_at, created_by
 ```
@@ -260,13 +268,14 @@ sans GPU dédié.
 
 | Lot | Contenu | Utilisable ? |
 |---|---|---|
-| 0 | Socle : dépôt propre, compose, migrations, comptes, maisons, membres | non |
+| 0 | Socle : dépôt propre, compose, migrations, comptes, maisons, membres, jeu de données de test | non |
 | 1 | Étiquettes, arbre, scan vers fiche contenant, saisie manuelle | **oui**, déjà |
 | 2 | Capture hors-ligne, synchronisation, pipeline vision, boîte de réception | oui |
 | 3 | Recherche en langage naturel avec preuve photo | oui |
 | 4 | Re-calibrage et « plus vu depuis » | oui |
 | 5 | Volet technique : tableau électrique, équipements, entretien | oui |
-| 6 | SaaS : inscription publique, facturation | différé |
+| 6 | Accès invité : liens temporaires, visibilité par sous-arbre, vue guide | oui |
+| 7 | SaaS : inscription publique, facturation | différé |
 
 Le lot 1 est volontairement livrable seul, sans aucune vision : un inventaire
 manuel avec QR est déjà utile, et il valide le modèle de données avant d'investir
@@ -274,7 +283,99 @@ dans le pipeline d'images.
 
 ---
 
-## 7. Points ouverts
+## 7. Bac à sable et développement
+
+Le découpage par compte n'est pas qu'une préparation au SaaS : il donne
+gratuitement un environnement de développement réaliste. Un compte de test avec
+sa propre maison, ses membres et ses étiquettes vit à côté des données réelles
+sans jamais les toucher.
+
+Pour que ce soit vrai, trois contraintes en découlent, à tenir dès le lot 0 :
+
+- **Tout cascade depuis le compte.** Clés étrangères en `ON DELETE CASCADE`
+  jusqu'à la racine, et photos rangées sous un préfixe de stockage par compte.
+  Supprimer un compte doit tout effacer, base et objets, sans orphelin. Sans
+  cela la remise à zéro devient un script fragile que l'on n'ose plus lancer.
+- **Un jeu de données semé et reproductible.** Une commande qui crée un compte
+  de démonstration, deux maisons, un arbre crédible, des étiquettes et des
+  observations réparties dans le temps pour que la logique de re-calibrage et de
+  « plus vu depuis » ait de quoi travailler. C'est aussi ce qui permet de
+  développer sans photographier sa propre maison.
+- **Un compte porte son type** (`real` ou `sandbox`). La remise à zéro refuse de
+  s'exécuter sur un compte réel, et l'interface marque visiblement un compte de
+  démonstration. Une colonne, et une confusion coûteuse évitée.
+
+Deux bénéfices qui suivent :
+
+**L'isolation devient testable.** Avec deux comptes de test, on écrit le test
+qui compte vraiment : le compte A ne voit rien du compte B, sur chaque route.
+Sans bac à sable, le Row Level Security est une intention ; avec, c'est une
+propriété vérifiée à chaque exécution de la suite de tests.
+
+**La vision se bouchonne.** Un fournisseur de vision factice, choisi par variable
+d'environnement, renvoie des détections figées pour les photos semées. Le
+développement ne consomme aucun appel payant et les tests deviennent
+déterministes. L'interface prévue pour changer de modèle sert exactement à ça.
+
+Plus tard, un compte de démonstration en lecture seule pour une page de
+présentation publique tombe du même mécanisme, sans travail supplémentaire.
+
+---
+
+## 8. Accès invité temporaire
+
+Cas d'usage : une maison louée, en courte durée ou non. Le propriétaire veut que
+l'occupant sache comment la maison fonctionne et où les choses sont rangées,
+pendant son séjour et pas au delà.
+
+Trois propriétés le définissent.
+
+**Il est borné dans le temps.** L'adhésion porte une fenêtre de validité et
+s'éteint seule. Rien à révoquer manuellement, donc rien à oublier de révoquer.
+
+**Il est borné dans l'espace.** Un invité est rattaché à une maison, jamais au
+compte. C'est la raison pour laquelle l'adhésion porte une portée.
+
+**Il est borné dans le contenu, et par défaut il ne voit rien.** La visibilité
+invité est une autorisation explicite, nœud par nœud, héritée par le sous-arbre :
+on ouvre « Cuisine » ou « Placard à balais » et tout ce qu'il contient devient
+visible. Tout le reste demeure invisible.
+
+Ce défaut n'est pas négociable. L'inverse, tout montrer sauf une liste
+d'exclusions, expose les papiers, les objets de valeur et les effets personnels
+du propriétaire à la première chose qu'il oublie de masquer. Une autorisation
+oubliée prive l'invité d'une information ; une exclusion oubliée le renseigne sur
+l'endroit où trouver les bijoux.
+
+**Entrée sans compte.** Un lien d'invitation, transmis avec la réservation, ouvre
+une session légère sur le téléphone de l'invité, valable jusqu'à la fin du
+séjour. Ni mot de passe, ni inscription. Les étiquettes QR fonctionnent alors
+pour lui comme pour la famille, filtrées par la visibilité invité.
+
+**Prévisualisation obligatoire.** Le propriétaire doit pouvoir afficher sa maison
+telle que l'invité la verra, avant l'arrivée. Sans ce miroir, personne ne fera
+jamais confiance au filtrage, et la fonctionnalité ne sera pas utilisée.
+
+Ce que l'invité cherche n'est d'ailleurs pas un inventaire mais un mode d'emploi :
+code du wifi, fonctionnement du chauffage, jour des poubelles, emplacement de
+l'aspirateur, consignes de départ. Une vue « guide » ordonnée par le
+propriétaire, pointant vers des nœuds ou du texte libre, sert mieux que la
+recherche. C'est le point où le volet documentation technique et le volet
+rangement se rejoignent.
+
+Cette piste est aussi la plus solide commercialement. Un inventaire familial se
+vend mal, chacun pensant pouvoir s'en passer. Un outil qui produit le guide d'une
+maison en location, avec accès invité expirant et recherche d'objets filtrée,
+s'adresse à quelqu'un dont c'est le métier.
+
+Rien de tout cela n'est construit dans le MVP. Seules trois décisions sont prises
+maintenant, parce qu'elles coûtent une colonne chacune aujourd'hui et une
+migration douloureuse plus tard : la portée de l'adhésion, sa fenêtre de
+validité, et le drapeau de visibilité invité sur les nœuds.
+
+---
+
+## 9. Points ouverts
 
 - Matériau des étiquettes : le papier ne survivra pas au garage et à la cave,
   prévoir du synthétique ou une plastification.
@@ -283,10 +384,14 @@ dans le pipeline d'images.
 - Détection des doublons lorsqu'un même objet est photographié dans deux
   contenants successifs sans re-calibrage intermédiaire.
 - Purge et durée de conservation des photos, qui dimensionnent le stockage.
+- Coût de curation de la visibilité invité : marquer nœud par nœud serait
+  rédhibitoire, l'héritage par sous-arbre doit suffire dans la pratique.
+- Traçabilité des consultations invité : utile en location, à ne pas
+  sur-construire.
 
 ---
 
-## 8. Reprise de l'existant
+## 10. Reprise de l'existant
 
 Le dépôt contient une tentative antérieure inachevée : schéma Prisma, worker de
 vision, deux applications Next.js concurrentes. Rien n'est repris. Le schéma
