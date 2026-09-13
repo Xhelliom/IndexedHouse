@@ -57,3 +57,4 @@ Ce que cela impose ensuite, y compris ce que cela rend plus difficile.
 | 0018 | Un seul chemin d'accès à la base, vérifié par un test | accepté |
 | 0019 | Réduction cliente, normalisation serveur, pas d'original conservé | accepté |
 | 0020 | Sauvegardes par nature de données, restauration vérifiée | accepté |
+| 0021 | Open source sous AGPL-3.0 | accepté |

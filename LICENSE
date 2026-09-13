@@ -1,0 +1,25 @@
+IndexedHouse
+Copyright (C) 2026 Xhelliom
+
+Ce programme est un logiciel libre : vous pouvez le redistribuer et le modifier
+selon les termes de la GNU Affero General Public License, version 3, telle que
+publiée par la Free Software Foundation.
+
+Ce programme est distribué dans l'espoir qu'il sera utile, mais SANS AUCUNE
+GARANTIE, ni explicite ni implicite, y compris les garanties de COMMERCIALISATION
+ou d'ADAPTATION À UN USAGE PARTICULIER. Voir la GNU Affero General Public License
+pour plus de détails.
+
+-------------------------------------------------------------------------------
+ATTENTION : ce fichier ne contient pas encore le texte intégral de la licence.
+
+Le texte officiel n'a pas pu être récupéré depuis l'environnement où ce fichier a
+été créé. Il doit être déposé ici, en remplacement de ce bloc, avant toute
+publication du dépôt :
+
+    curl -o LICENSE https://www.gnu.org/licenses/agpl-3.0.txt
+
+puis remettre l'en-tête de copyright ci-dessus au début du fichier.
+
+Décision associée : docs/decisions/0021-open-source-agpl.md
+-------------------------------------------------------------------------------

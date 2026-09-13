@@ -1,7 +1,7 @@
 # Lot 0 — Socle
 
 - Statut : à faire
-- Décisions applicables : ADR 0006, 0009, 0012, 0013, 0014, 0015, 0018, 0020
+- Décisions applicables : ADR 0006, 0009, 0012, 0013, 0014, 0015, 0018, 0020, 0021
 
 ## But
 
@@ -93,6 +93,21 @@ associées. Voir la section 3.1 du document d'architecture et l'ADR 0006.
 
 L'arbre des nœuds n'est **pas** créé dans ce lot. Il appartient au lot 1, qui le
 mettra à l'épreuve avec de vraies données.
+
+## Ordre d'exécution
+
+Le lot se construit en deux temps, et **seul le second attend le nom de
+domaine**. `localhost` est un contexte sécurisé par exception, donc la caméra et
+le service worker fonctionnent en local sans certificat.
+
+**Temps 1, sans rien attendre** : dépôt, espaces de travail, schéma, migrations,
+politiques de sécurité, fonction d'accès unique et ses tests, authentification,
+interface, page de diagnostic, semis, remise à zéro, intégration continue.
+Postgres tourne dans un conteneur local. Critères 2 à 11 et 14.
+
+**Temps 2, une fois le domaine choisi** : opérateur CloudNativePG, manifestes,
+entrée, certificat, sauvegarde, travail de restauration, alertes. Critères 1, 12
+et 13.
 
 ## Critères d'acceptation
 

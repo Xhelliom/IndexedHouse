@@ -39,13 +39,16 @@ tourne sur le cluster, avec des comptes de bac à sable.
 
 ## Diffusion
 
-Projet open source, images publiques.
+Projet open source sous AGPL-3.0 (ADR 0021), images publiques construites pour
+amd64 et arm64.
 
 ## À trancher
 
-| Sujet | Options | Statut |
-|---|---|---|
-| Nom de domaine | à choisir | **bloquant pour le lot 0** |
-| Type de défi ACME | HTTP-01 si le cluster est joignable publiquement, sinon DNS-01 avec les identifiants de l'hébergeur de zone | en attente |
-| Licence | AGPL-3.0 ou MIT | en attente |
-| Architectures d'image | amd64, arm64, ou les deux | en attente |
+| Sujet | Statut |
+|---|---|
+| Nom de domaine | bloquant pour la **mise en cluster** seulement, pas pour le développement |
+| Type de défi ACME | HTTP-01 si le cluster est joignable publiquement, sinon DNS-01 avec une clé d'API chez l'hébergeur de la zone |
+
+Aucun des deux n'empêche de commencer : `localhost` est un contexte sécurisé par
+exception, donc la caméra et le service worker fonctionnent en développement
+local sans certificat.

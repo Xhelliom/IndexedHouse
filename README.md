@@ -21,6 +21,11 @@ tentative antérieure abandonnée ; ils seront supprimés au démarrage du lot 0
 | [`docs/specs/`](docs/specs/) | Une spécification par lot, écrite avant le code |
 | [`docs/futur/`](docs/futur/) | Idées mûries, non engagées |
 
+## Licence
+
+AGPL-3.0. Voir [`LICENSE`](LICENSE) et la décision
+[`0021`](docs/decisions/0021-open-source-agpl.md).
+
 ## Le principe à retenir
 
 Ranger un objet ne doit jamais coûter plus d'un geste et d'une photo. Toute
